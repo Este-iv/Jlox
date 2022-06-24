@@ -6,3 +6,5 @@ This is following the book Creafing Interpreters by Robers Nystrom.
 
 - Starting the project right now, and getting thins intialized.
 - This is following content from chapter 4 of the book.
+  - added Token file.
+  - removed auto generated file.

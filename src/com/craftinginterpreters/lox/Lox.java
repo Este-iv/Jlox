@@ -1,13 +1,14 @@
  package com.craftinginterpreters.lox; 
  import java.io.BufferedReader;
  import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
+ import java.io.InputStreamReader;
+ import java.nio.charset.Charset;
  import java.nio.file.Files;
  import java.nio.file.Paths; 
  import java.util.List;
 
 public class Lox {
+    static boolean hadError = false; 
     public static void main(String[] args) throws IOException{
         if(args.length > 1){
             System.out.println("Usage: Jlox [Script]");
@@ -22,8 +23,10 @@ public class Lox {
 
     private static void runFile(String path) throws IOException{
         byte[] bytes = File.readAllBytes(Paths.get(path)); 
-        run(new String(bytes,Charset.defaultCharset())); 
-    
+        run(new String(bytes,Charset.defaultCharset()));
+
+        //indication of an error.
+        if(hadError) System.exit(65);
     }
 
     private static void runPrompt() throws IOException{
@@ -35,8 +38,11 @@ public class Lox {
             String line = reader.readline(); 
             if (line == null) break; 
             run(line); 
+            //error flag reset
+            hadError = false; 
         }
     }
+
 
     private static void run(String source){
         Scanner scanner = new Scanner(source); 
@@ -46,6 +52,17 @@ public class Lox {
         for(Token token : tokens){
             System.out.println(token);
         }
-
     }
+
+    // initial error handling for lox. 
+    static void error (int line, String message){
+        report(line,"", message); 
+    }
+
+    private static void report(int line, String where, String message){
+        System.err.println("[line " + line + "] Error" + where + ": " + message); 
+        hadError= true; 
+    }
+
+
 }
