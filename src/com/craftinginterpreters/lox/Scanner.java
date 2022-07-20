@@ -80,7 +80,20 @@ public class Scanner {
     }
 
     private void string(){
-        
+        while(peek() != '"' && !isAtEnd()){
+            if(peek() == '\n') line++; 
+            advance(); 
+        }
+        if(isAtEnd()){
+            Lox.error(line, "Unterminated string.");
+            return; 
+        }
+        advance(); // this is for the closing " char. 
+
+        // trimming of the surrounding quotes? 
+        String value = source.substring(start+1,current-1);
+        addToken(STRING,value);
+
     }
 
 

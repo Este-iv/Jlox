@@ -13,6 +13,7 @@ enum TokenType{
     //One or two character tokens. 
     BANG, BANG_EQUAL, EQUAL, EQUAL_EQUAL,
     GREATER, GREATER_THAN, LESS, LESS_EQUAL,
+    BLOCK_START,BLOCK_END,
 
     // The litterals
     IDENTIFIER, STRING, NUMBER, 
